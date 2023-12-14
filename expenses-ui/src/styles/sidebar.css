@@ -1,0 +1,22 @@
+.sidebar {
+  font-family: "Courier New", Courier, monospace;
+  margin-left: 0;
+  padding-left: 0;
+  width: 90%;
+}
+.sidebar ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.sidebar ul li {
+  background-color: blue;
+  margin: 10px;
+  border: 1px solid blue;
+  list-style: none;
+  padding: 5px;
+  font-size: 22px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+}
