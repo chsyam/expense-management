@@ -1,0 +1,54 @@
+package com.expenses.expensemanagement.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.expenses.expensemanagement.bean.Transaction;
+import com.expenses.expensemanagement.service.TransactionService;
+
+@RestController
+@RequestMapping("/transactions")
+public class TransactionController {
+	@Autowired
+	private TransactionService transactionService;
+
+	@PostMapping("/save")
+	public Object saveTransaction(@RequestBody Transaction transaction) {
+		Date currentDate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
+		String formattedDate = sdf.format(currentDate);
+		transaction.setTransactionDate(formattedDate);
+		Long epochTime = System.currentTimeMillis();
+		transaction.setTransactionTime(epochTime);
+		return transactionService.saveTransaction(transaction);
+	}
+
+	@GetMapping("/get/all")
+	public List<Transaction> getAllTransactions() {
+		return transactionService.getAll();
+	}
+
+	@GetMapping("/get/{id}")
+	public Object getTransactionById(@PathVariable("int") int id) {
+		return transactionService.getTransactionById(id);
+	}
+
+	@GetMapping("/delete/{id}")
+	public Object delete(@PathVariable("int") int id) {
+		return transactionService.deleteTransaction(id);
+	}
+
+	@PostMapping("/update")
+	public Object updateUser(@RequestBody Transaction transaction) {
+		return transactionService.updateTransaction(transaction);
+	}
+}
