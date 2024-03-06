@@ -12,24 +12,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.expenses.expensemanagement.bean.Email;
 import com.expenses.expensemanagement.bean.Transaction;
+import com.expenses.expensemanagement.service.EmailService;
 import com.expenses.expensemanagement.service.TransactionService;
 
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
 	@Autowired
+	private EmailService emailService;
+
+	@Autowired
 	private TransactionService transactionService;
 
 	@PostMapping("/save")
-	public Object saveTransaction(@RequestBody Transaction transaction) {
+	public String saveTransaction(@RequestBody Transaction transaction) {
 		Date currentDate = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
 		String formattedDate = sdf.format(currentDate);
 		transaction.setTransactionDate(formattedDate);
 		Long epochTime = System.currentTimeMillis();
 		transaction.setTransactionTime(epochTime);
-		return transactionService.saveTransaction(transaction);
+		boolean saved = transactionService.saveTransaction(transaction);
+
+		if (saved) {
+			String recepeint = "19131a0543@gvpce.ac.in";
+			String subject = "New Transaction added for you";
+			String body = "Syam added you in a transaction." + "Amount : $" + transaction.getAmount() + "Description : "
+					+ transaction.getDescription();
+			Email email = new Email(recepeint, subject, body);
+			String res = emailService.sendEmail(email);
+			return "Transaction Saved Successfully" + res;
+		}
+		return "Error while saving the Transaction";
 	}
 
 	@GetMapping("/get/all")

@@ -13,12 +13,12 @@ public class TransactionService {
 	@Autowired
 	private TransactionRepository transactionRepository;
 
-	public Object saveTransaction(Transaction transaction) {
+	public Boolean saveTransaction(Transaction transaction) {
 		transactionRepository.save(transaction);
 		if (transactionRepository.findById(transaction.getId()) != null) {
-			return "Transaction saved successfully";
+			return true;
 		}
-		return "Transaction not saved...!";
+		return false;
 	}
 
 	public List<Transaction> getAll() {
