@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SmsService {
 	@Autowired
-	private TwilioConfig twilioConfig;
 	static Map<String, String> otpMap = new HashMap<>();
 
 	public static OtpResponseDto sendSMS(OtpRequest otpRequest) {
