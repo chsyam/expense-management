@@ -31,3 +31,5 @@ jobs:
         file: ./expense-management/ # Path to your Dockerfile
         push: true
         tags: syam6845/log-expenses-app-auto-build:latest
+
+
