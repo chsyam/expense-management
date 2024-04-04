@@ -28,6 +28,6 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         context: .
-        file: ./Dockerfile # Path to your Dockerfile
+        file: ./expense-management/ # Path to your Dockerfile
         push: true
-        tags: your-docker-username/spring-boot-app:latest # Replace with your Docker Hub username and image name
+        tags: syam6845/log-expenses-app-auto-build:latest
